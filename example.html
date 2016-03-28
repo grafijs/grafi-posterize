@@ -1,0 +1,45 @@
+<html>
+  <input type="file" id="input" onchange="reader.readAsDataURL(this.files[0])">
+  <h1>original</h1>
+  <img id="original">
+  <h1>processed</h1>
+  <div id="slider" hidden>
+    <input id="tone" type="range" min="2" max="255" value="4"/>
+    <label id="label">4</label>
+  </div>
+  <canvas id="canvas" hidden></canvas>
+  <canvas id="output"></canvas>
+  <script src="grafi-posterize.js"></script>
+  <script>
+    var slider = document.getElementById('slider')
+    var tone = document.getElementById('tone')
+    var label = document.getElementById('label')
+    var original = document.getElementById('original')
+    var output = document.getElementById('output')
+    var canvas = document.getElementById('canvas')
+    var canvasCtx = canvas.getContext('2d')
+    var outputCtx = output.getContext('2d')
+    var reader = new FileReader()
+    reader.onload = function() {
+      original.src = reader.result
+    }
+    original.onload = function () {
+      slider.hidden = false
+      output.width = original.width
+      output.height = original.height
+      canvas.width = original.width
+      canvas.height = original.height
+      canvasCtx.drawImage(original, 0, 0)
+      newImage = grafi.posterize(canvasCtx.getImageData(0, 0, original.width, original.height))
+      outputCtx.putImageData(newImage, 0, 0)
+      tone.oninput = function() {
+        var toneNum = this.value
+        var updatedImage = grafi.posterize(canvasCtx.getImageData(0, 0, original.width, original.height), {tone: toneNum})
+        outputCtx.putImageData(updatedImage, 0, 0)
+        label.innerText = toneNum
+      }
+    }
+
+  </script>
+
+</hmtl>
