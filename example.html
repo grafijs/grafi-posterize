@@ -4,7 +4,7 @@
   <img id="original">
   <h1>processed</h1>
   <div id="slider" hidden>
-    <input id="tone" type="range" min="2" max="255" value="4"/>
+    <input id="level" type="range" min="2" max="255" value="4"/>
     <label id="label">4</label>
   </div>
   <canvas id="canvas" hidden></canvas>
@@ -12,7 +12,7 @@
   <script src="grafi-posterize.js"></script>
   <script>
     var slider = document.getElementById('slider')
-    var tone = document.getElementById('tone')
+    var level = document.getElementById('level')
     var label = document.getElementById('label')
     var original = document.getElementById('original')
     var output = document.getElementById('output')
@@ -30,13 +30,13 @@
       canvas.width = original.width
       canvas.height = original.height
       canvasCtx.drawImage(original, 0, 0)
-      newImage = grafi.posterize(canvasCtx.getImageData(0, 0, original.width, original.height))
+      newImage = grafi.posterize(canvasCtx.getImageData(0, 0, original.width, original.height), {level: level.value})
       outputCtx.putImageData(newImage, 0, 0)
-      tone.oninput = function() {
-        var toneNum = this.value
-        var updatedImage = grafi.posterize(canvasCtx.getImageData(0, 0, original.width, original.height), {tone: toneNum})
+      level.oninput = function() {
+        var levelNum = this.value
+        var updatedImage = grafi.posterize(canvasCtx.getImageData(0, 0, original.width, original.height), {level: levelNum})
         outputCtx.putImageData(updatedImage, 0, 0)
-        label.innerText = toneNum
+        label.innerText = levelNum
       }
     }
 

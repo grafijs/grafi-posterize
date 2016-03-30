@@ -13,7 +13,7 @@ function posterize (imgData, option) {
   // check options object & set default variables
   option = option || {}
   option.monochrome = option.monochrome || false
-  option.tone = option.tone || 4
+  option.level = option.level || 4
 
   // Check length of data & avilable pixel size to make sure data is good data
   var pixelSize = imgData.width * imgData.height
@@ -26,17 +26,18 @@ function posterize (imgData, option) {
   var newPixelData = new Uint8ClampedArray(pixelSize * (option.monochrome || 4))
 
   var lookupTable = new Uint8Array(256)
-  var colorSize = 256 / (option.tone - 1)
-  var stepSize = 256 / option.tone
-  var l, r, p, _i, _data
+  var colorSize = 256 / (option.level - 1) // 23
+  var stepSize = 256 / option.level //21
+  var l, _li, r, p, _i, _data
 
-  for (l = 0; l < option.tone; l++) {
-    for (i = 0; i < stepSize; i++) {
-      if (l === 3) {
-        lookupTable[l * stepSize + i] = 255
+  for (l = 0; l < option.level; l++) {
+    for (s = 0; s < stepSize; s++) {
+      _li = Math.round(l * stepSize + s)
+      if (l === option.level - 1) {
+        lookupTable[_li] = 255
         continue
       }
-      lookupTable[l * stepSize + i] = l * colorSize
+      lookupTable[_li] = l * colorSize
     }
   }
   console.log(lookupTable)
