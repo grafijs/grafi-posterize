@@ -1,10 +1,11 @@
 <html>
   <input type="file" id="input" onchange="reader.readAsDataURL(this.files[0])">
-  <h1>original</h1>
+  <h1>grafi.js posterize sample</h1>
+  <h2>original</h2>
   <img id="original">
-  <h1>processed</h1>
+  <h2>processed</h2>
   <div id="slider" hidden>
-    <input id="level" type="range" min="2" max="255" value="4"/>
+    <input id="level" type="range" min="2" max="256" value="4"/>
     <label id="label">4</label>
   </div>
   <canvas id="canvas" hidden></canvas>
@@ -14,6 +15,7 @@
     var slider = document.getElementById('slider')
     var level = document.getElementById('level')
     var label = document.getElementById('label')
+
     var original = document.getElementById('original')
     var output = document.getElementById('output')
     var canvas = document.getElementById('canvas')
@@ -39,7 +41,5 @@
         label.innerText = levelNum
       }
     }
-
   </script>
-
 </hmtl>

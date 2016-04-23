@@ -1,7 +1,7 @@
 {
   "name": "grafi-posterize",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Posterize module for grafi.js",
   "main": "grafi-posterize.js",
   "scripts": {
     "test": "node grafi-posterize.test.js",
